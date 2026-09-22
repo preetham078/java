@@ -1,46 +1,19 @@
-import java.util.Scanner;
-
-class Person {
-    String name;
-    int age;
-
-    void getPersonDetails(Scanner sc) {
-        System.out.print("Enter name: ");
-        name = sc.nextLine();
-
-        System.out.print("Enter age: ");
-        age = sc.nextInt();
-        sc.nextLine();
-    }
-}
+package bank;
+import bank.accounts.Account;
+import bank.customer.Customer;
+import bank.loan.Loan;
 
 public class Main {
-    static class Student extends Person {
-        int marks;
-
-        void getStudentDetails(Scanner sc) {
-            System.out.print("Enter marks: ");
-            marks = sc.nextInt();
-            sc.nextLine();
-        }
-
-        void display() {
-            System.out.println("\nStudent Details:");
-            System.out.println("Name: " + name);
-            System.out.println("Age: " + age);
-            System.out.println("Marks: " + marks);
-        }
-    }
-
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Customer customer = new Customer(1, "John Doe", 1234567890.0);
+        Account account = new Account(101, "Savings", 1000.0);
+        Loan loan = new Loan(1001, "Home", 50000.0);
 
-        Student s = new Student();
-
-        s.getPersonDetails(sc);
-        s.getStudentDetails(sc);
-        s.display();
-
-        sc.close();
+        customer.display();
+        account.display();
+        loan.display();
+        account.deposit(500.0);
+        account.withdraw(200.0);
+        account.displayBalance();
     }
 }
