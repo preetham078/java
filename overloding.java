@@ -19,6 +19,10 @@ class advancedCalculator extends calculator
     void display(){
         System.out.println("This is advanced calculator");
     }
+    @Override
+    int add(int a, int b, int c) {
+        return a + b + c + 10; 
+    }
 }
 
 
@@ -30,6 +34,7 @@ public class overloding {
         System.out.println(c.add(10, 20));
         System.out.println(c.add(10, 20, 30));
         System.out.println(c.add(10.5, 20.5));
+        System.out.println(ac.add(10, 20, 30));
         ac.display();
     }
 }
