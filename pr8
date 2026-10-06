@@ -1,0 +1,69 @@
+class TicketBooking {
+    String passengerName;
+    String bookingStatus;
+
+    TicketBooking(String passengerName) {
+        this.passengerName = passengerName;
+        this.bookingStatus = "Pending";
+    }
+
+    void bookTicket() {
+        bookingStatus = "Confirmed";
+        System.out.println("Passenger: " + passengerName);
+        System.out.println("Booking Status: " + bookingStatus);
+        System.out.println("Thread ID: " + Thread.currentThread().getId());
+        System.out.println("Thread Name: " + Thread.currentThread().getName());
+        System.out.println();
+    }
+}
+
+class BookingThread extends Thread {
+    TicketBooking booking;
+
+    BookingThread(TicketBooking booking) {
+        this.booking = booking;
+    }
+
+    public void run() {
+        booking.bookTicket();
+    }
+}
+
+class BookingRunnable implements Runnable {
+    TicketBooking booking;
+
+    BookingRunnable(TicketBooking booking) {
+        this.booking = booking;
+    }
+
+    public void run() {
+        booking.bookTicket();
+    }
+}
+
+public class RailwayReservation {
+    public static void main(String[] args) throws InterruptedException {
+        TicketBooking b1 = new TicketBooking("Rahul");
+        TicketBooking b2 = new TicketBooking("Priya");
+        TicketBooking b3 = new TicketBooking("Arjun");
+        TicketBooking b4 = new TicketBooking("Sneha");
+
+        BookingThread t1 = new BookingThread(b1);
+        BookingThread t2 = new BookingThread(b2);
+
+        Thread t3 = new Thread(new BookingRunnable(b3));
+        Thread t4 = new Thread(new BookingRunnable(b4));
+
+        t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
+
+        t1.join();
+        t2.join();
+        t3.join();
+        t4.join();
+
+        System.out.println("All passenger booking requests have been processed successfully.");
+    }
+}
