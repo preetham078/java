@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class lamda {
+public class examplelambda {
     public static void main(String[] args) {
         ArrayList<String> student = new ArrayList<>();
         student.add("aaaaa");
