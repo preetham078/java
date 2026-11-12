@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+// Custom Exception
+class InsufficientBalanceException extends Exception {
+
+    public InsufficientBalanceException(String message) {
+        super(message);
+    }
+}
+
+// Account class
+class Account {
+
+    String accountHolderName;
+    double accountBalance;
+
+    // Constructor
+    Account(String accountHolderName, double accountBalance) {
+        this.accountHolderName = accountHolderName;
+        this.accountBalance = accountBalance;
+    }
+
+    // Withdrawal method
+    void withdraw(double amount) throws InsufficientBalanceException {
+
+        if (amount > accountBalance) {
+            throw new InsufficientBalanceException(
+                "Insufficient balance! Available balance: ₹" + accountBalance
+            );
+        }
+
+        if (amount < 0) {
+            throw new IllegalArgumentException(
+                "Withdrawal amount cannot be negative."
+            );
+        }
+
+        if (amount == 0) {
+            throw new IllegalArgumentException(
+                "Withdrawal amount cannot be zero."
+            );
+        }
+
+        accountBalance = accountBalance - amount;
+
+        System.out.println("Withdrawal successful!");
+        System.out.println("Amount withdrawn: ₹" + amount);
+        System.out.println("Remaining balance: ₹" + accountBalance);
+    }
+}
+
+// Main class
+public class ATMWithdrawalSystem {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Create Account object
+        Account account = new Account("Rahul", 10000);
+
+        System.out.println("===== ATM WITHDRAWAL SYSTEM =====");
+        System.out.println("Account Holder: " + account.accountHolderName);
+        System.out.println("Available Balance: ₹" + account.accountBalance);
+
+        System.out.print("Enter withdrawal amount: ₹");
+        double amount = sc.nextDouble();
+
+        try {
+
+            // Call withdrawal method
+            account.withdraw(amount);
+
+        } catch (InsufficientBalanceException e) {
+
+            System.out.println("Transaction Failed!");
+            System.out.println("Error: " + e.getMessage());
+
+        } catch (IllegalArgumentException e) {
+
+            System.out.println("Invalid Transaction!");
+            System.out.println("Error: " + e.getMessage());
+
+        } catch (Exception e) {
+
+            System.out.println("An unexpected error occurred.");
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        System.out.println("=================================");
+        System.out.println("Final Balance: ₹" + account.accountBalance);
+
+        sc.close();
+    }
+}
